@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace Swagger_Samples.Models
 {
-    public class BookRepository : IBookRepository, IDisposable
+    public class BookRepository : IBookRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -21,12 +21,7 @@ namespace Swagger_Samples.Models
         {
             _context.Add(book);
             _context.SaveChanges();
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-        }
+        }        
 
         public IEnumerable<Book> Find(Expression<Func<Book, bool>> predicate)
         {

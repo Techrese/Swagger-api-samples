@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/Swagger-Samples",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:61791",
       "sslPort": 44346

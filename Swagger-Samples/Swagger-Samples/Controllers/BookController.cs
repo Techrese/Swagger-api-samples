@@ -1,19 +1,41 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Swagger_Samples.Models;
+using System.Net;
 
 namespace Swagger_Samples.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class BookController : ControllerBase
     {
-        
-        public IActionResult Index()
+        private readonly BookRepository bookRepository;
+        private readonly ApplicationDbContext _context;
+
+        public BookController(ApplicationDbContext context)
         {
-            return null;
+            _context = context;
+            bookRepository = new BookRepository(context);
         }
+
+        
+        [Route("addbook")]
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(Book))]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult CreateBook(Book book)
+        {
+            if (ModelState.IsValid)
+            {
+                bookRepository.AddBook(book);
+                return Ok(book);
+            }
+            else
+            {
+                return BadRequest();
+            }
+            
+        }
+
+
     }
 }
