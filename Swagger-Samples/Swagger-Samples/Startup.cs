@@ -9,7 +9,10 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+
+using Microsoft.EntityFrameworkCore;
+using Swagger_Samples.Models;
+
 
 namespace Swagger_Samples
 {
@@ -26,6 +29,10 @@ namespace Swagger_Samples
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("ApplicationContext")));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,7 +42,7 @@ namespace Swagger_Samples
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
